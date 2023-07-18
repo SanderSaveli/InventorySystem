@@ -4,15 +4,17 @@ namespace IUP.Toolkits.InventorySystem
 {
     public interface IItem
     {
-        public string id { get; }
+        public string ID { get; }
 
-        public bool AddProperty<T>(T propertyValue) where T : Property;
+        public IReadOnlyCollection<IProperty> staticProperties { get; }
 
-        public bool SetProperty<T>(T propertyValue) where T : Property;
+        public IReadOnlyCollection<IProperty> dynamicProperties { get; }
 
-        public bool TryGetProperty<T>(string propertyName, out T propertyValue) where T : Property;
+        public bool AddProperty<T>(string propertyName, T propertyValue);
 
-        public void GetProperties(out List<Property> staticProperties, out List<Property> dynamicProperties);
+        public bool SetProperty<T>(string propertyName, T propertyValue);
+
+        public bool TryGetProperty<T>(string propertyName, out T propertyValue);
     }
 }
 

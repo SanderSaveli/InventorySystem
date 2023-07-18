@@ -1,5 +1,17 @@
 {
   "dependencies": {
+    "com.iup.dynamic-blackboard": {
+      "version": "file:D:/Develop/iup-dynamic-blackboard/IUP Dynamic Blackboard",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
+    "com.iup.generale-purpose-utilities": {
+      "version": "file:D:/Develop/iup-general-purpose-utilities-main (1)/iup-general-purpose-utilities-main/IUP General Purpose Utilities",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "7.0.10",
       "depth": 1,

@@ -9,5 +9,7 @@ namespace IUP.Toolkits.InventorySystem
         public Type propertyType { get; }
 
         public bool TrySet(IProperty value);
+
+        public T GetValue<T>();
     }
 }

@@ -20,6 +20,11 @@ namespace IUP.Toolkits.InventorySystem
             }
             return false;
         }
+
+        public override T GetValue<T>()
+        {
+            return (T)(object)value;
+        }
     }
 
 }

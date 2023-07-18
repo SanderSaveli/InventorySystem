@@ -6,64 +6,73 @@ namespace IUP.Toolkits.InventorySystem
     {
         private Item item;
 
-        public LogItem(string id,
-            List<Property> staticProperties = null,
-            List<Property> dynamicProperties = null)
+        public LogItem(string ID,
+            ItemAtlas itemAtlas,
+            Dictionary<string, IProperty> dynamicProperties = null)
         {
-            item = new Item(id, staticProperties, dynamicProperties);
+            item = new Item(ID, itemAtlas, dynamicProperties);
             Debug.Log($"Item {this} Ini, Property on ini: ");
-            GetProperties(out staticProperties, out dynamicProperties);
         }
-        public string id => throw new System.NotImplementedException();
+        public string ID => item.ID;
 
-        public bool AddProperty<T>(T propertyValue) where T : Property
-        {
-            if (item.AddProperty(propertyValue)) 
+        public IReadOnlyCollection<IProperty> staticProperties { get
             {
-                Debug.Log($"Property {propertyValue.name} added");
+                Debug.Log("Static properties: ");
+                return LogProperty(item.staticProperties);
+            } } 
+
+        public IReadOnlyCollection<IProperty> dynamicProperties
+        {
+            get
+            {
+                Debug.Log("Dynamic properties: ");
+                return LogProperty(item.dynamicProperties);
+            }
+        }
+
+
+        public bool AddProperty<T>(string propertyName, T propertyValue)
+        {
+            if (item.AddProperty(propertyName, propertyValue))
+            {
+                Debug.Log($"Property {propertyName} added");
                 return true;
             }
-            Debug.LogWarning($"Property {propertyValue.name} not added");
+            Debug.LogWarning($"Property {propertyName} not added");
             return false;
         }
 
-        public void GetProperties(out List<Property> staticProperties, out List<Property> dynamicProperties)
+        public bool SetProperty<T>(string propertyName, T propertyValue)
         {
-            item.GetProperties(out staticProperties, out dynamicProperties);
-            string statProp = "";
-            foreach(Property property in staticProperties) 
+            if (item.SetProperty(propertyName, propertyValue))
             {
-                statProp += property.name + ", ";
-            }
-            Debug.Log("Static properties: "+ statProp);
-            string DynProp = "";
-            foreach (Property property in dynamicProperties)
-            {
-                DynProp += property.name + ", ";
-            }
-            Debug.Log("Dynamic properties: " + DynProp);
-        }
-
-        public bool SetProperty<T>(T propertyValue) where T : Property
-        {
-            if (item.SetProperty(propertyValue))
-            {
-                Debug.Log($"Property {propertyValue.name} setted");
+                Debug.Log($"Property {propertyName} setted");
                 return true;
             }
-            Debug.LogWarning($"Property {propertyValue.name} not settes");
+            Debug.LogWarning($"Property {propertyName} not settes");
             return false;
         }
 
-        public bool TryGetProperty<T>(string propertyName, out T propertyValue) where T : Property
+        public bool TryGetProperty<T>(string propertyName, out T propertyValue)
         {
             if(item.TryGetProperty(propertyName, out propertyValue)) 
             {
-                Debug.Log($"Property {propertyValue.name} is on Item");
+                Debug.Log($"Property {propertyName} is on Item");
                 return true;
             }
-            Debug.LogWarning($"Property {propertyValue.name} is not on Item");
+            Debug.LogWarning($"Property {propertyName} is not on Item");
             return false;
+        }
+
+        private IReadOnlyCollection<IProperty> LogProperty(IReadOnlyCollection<IProperty> properties) 
+        {
+            string prop = "";
+            foreach (Property property in properties)
+            {
+                prop += property.name + ", ";
+            }
+            Debug.Log(prop);
+            return properties;
         }
     }
 }

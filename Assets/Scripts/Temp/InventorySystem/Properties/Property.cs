@@ -11,6 +11,8 @@ namespace IUP.Toolkits.InventorySystem
 
         public abstract bool TrySet(IProperty value);
 
+        public abstract T GetValue<T>();
+
         public Property(string name, Type propertyType)   
         {
             this.name = name;
